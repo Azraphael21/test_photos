@@ -3,59 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Pictures</title>
+    <title>Random Moving Puppy Pictures</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
-        }
-
-        h1 {
-            margin: 20px 0;
+            overflow: hidden;
+            background-color: #f0f8ff;
         }
 
         .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
+            position: relative;
+            width: 100vw;
+            height: 100vh;
         }
 
         .gallery img {
-            width: 200px;
-            height: 200px;
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
             object-fit: cover;
-            border: 2px solid #ccc;
-            border-radius: 8px;
+            animation: move 10s infinite alternate ease-in-out;
+        }
+
+        @keyframes move {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(calc(100vw - 150px), calc(100vh - 150px));
+            }
         }
     </style>
 </head>
 <body>
 
-    <h1>Random Pictures</h1>
     <div class="gallery" id="gallery"></div>
 
     <script>
         const gallery = document.getElementById('gallery');
         const numberOfImages = 10;
 
-        function getRandomImage() {
-            const randomNumber = Math.floor(Math.random() * 1000); // Adjust the range for variety
-            return `https://picsum.photos/200/200?random=${randomNumber}`;
+        function getRandomPuppyImage() {
+            const randomNumber = Math.floor(Math.random() * 1000);
+            return `https://place-puppy.com/150x150?random=${randomNumber}`;
         }
 
-        function loadRandomImages() {
+        function getRandomPosition() {
+            const x = Math.random() * (window.innerWidth - 150);
+            const y = Math.random() * (window.innerHeight - 150);
+            return { x, y };
+        }
+
+        function createMovingPuppyImage() {
+            const img = document.createElement('img');
+            img.src = getRandomPuppyImage();
+
+            const position = getRandomPosition();
+            img.style.left = `${position.x}px`;
+            img.style.top = `${position.y}px`;
+
+            img.style.animationDuration = `${5 + Math.random() * 10}s`; // Random speed between 5 and 15 seconds
+            gallery.appendChild(img);
+        }
+
+        function loadRandomPuppyImages() {
             for (let i = 0; i < numberOfImages; i++) {
-                const img = document.createElement('img');
-                img.src = getRandomImage();
-                gallery.appendChild(img);
+                createMovingPuppyImage();
             }
         }
 
-        window.onload = loadRandomImages;
+        window.onload = loadRandomPuppyImages;
     </script>
 </body>
 </html>
