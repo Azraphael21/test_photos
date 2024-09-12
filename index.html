@@ -3,78 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Moving Puppy Pictures</title>
+    <title>Bouncing Emojis Fun!</title>
     <style>
         body {
             margin: 0;
             padding: 0;
             overflow: hidden;
-            background-color: #f0f8ff;
+            background-color: #fef4e8;
+            font-family: Arial, sans-serif;
         }
 
-        .gallery {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
-        }
-
-        .gallery img {
+        .emoji {
             position: absolute;
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            animation: move 10s infinite alternate ease-in-out;
+            font-size: 50px;
+            animation: bounce 5s infinite cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Bouncing animation */
+            transform-origin: center;
         }
 
-        @keyframes move {
+        @keyframes bounce {
             0% {
-                transform: translate(0, 0);
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+            25% {
+                transform: translate(100vw, 50vh) rotate(90deg) scale(1.2);
+            }
+            50% {
+                transform: translate(50vw, 100vh) rotate(180deg) scale(0.8);
+            }
+            75% {
+                transform: translate(0vw, 50vh) rotate(270deg) scale(1.5);
             }
             100% {
-                transform: translate(calc(100vw - 150px), calc(100vh - 150px));
+                transform: translate(0, 0) rotate(360deg) scale(1);
             }
         }
+
     </style>
 </head>
 <body>
 
-    <div class="gallery" id="gallery"></div>
-
     <script>
-        const gallery = document.getElementById('gallery');
-        const numberOfImages = 10;
+        const emojis = ['😂', '😍', '😎', '🤯', '😜', '🥳', '🤪', '👽', '🤖', '💩']; // Fun emoji list
+        const numberOfEmojis = 15; // Number of bouncing emojis
+        const body = document.body;
 
-        function getRandomPuppyImage() {
-            const randomNumber = Math.floor(Math.random() * 1000);
-            return `https://place-puppy.com/150x150?random=${randomNumber}`;
+        function getRandomEmoji() {
+            return emojis[Math.floor(Math.random() * emojis.length)];
         }
 
         function getRandomPosition() {
-            const x = Math.random() * (window.innerWidth - 150);
-            const y = Math.random() * (window.innerHeight - 150);
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight;
             return { x, y };
         }
 
-        function createMovingPuppyImage() {
-            const img = document.createElement('img');
-            img.src = getRandomPuppyImage();
+        function createBouncingEmoji() {
+            const emojiDiv = document.createElement('div');
+            emojiDiv.classList.add('emoji');
+            emojiDiv.textContent = getRandomEmoji();
 
             const position = getRandomPosition();
-            img.style.left = `${position.x}px`;
-            img.style.top = `${position.y}px`;
+            emojiDiv.style.left = `${position.x}px`;
+            emojiDiv.style.top = `${position.y}px`;
 
-            img.style.animationDuration = `${5 + Math.random() * 10}s`; // Random speed between 5 and 15 seconds
-            gallery.appendChild(img);
+            emojiDiv.style.animationDuration = `${3 + Math.random() * 7}s`; // Random duration between 3 and 10 seconds
+            emojiDiv.style.fontSize = `${30 + Math.random() * 70}px`; // Random font size between 30px and 100px
+            body.appendChild(emojiDiv);
         }
 
-        function loadRandomPuppyImages() {
-            for (let i = 0; i < numberOfImages; i++) {
-                createMovingPuppyImage();
+        function loadRandomEmojis() {
+            for (let i = 0; i < numberOfEmojis; i++) {
+                createBouncingEmoji();
             }
         }
 
-        window.onload = loadRandomPuppyImages;
+        window.onload = loadRandomEmojis;
     </script>
 </body>
 </html>
