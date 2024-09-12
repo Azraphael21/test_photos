@@ -3,81 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bouncing Emojis Fun!</title>
+    <title>DIY Store</title>
+    <link rel="stylesheet" href="styles.css">
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: #fef4e8;
-            font-family: Arial, sans-serif;
-        }
-
-        .emoji {
-            position: absolute;
-            font-size: 50px;
-            animation: bounce 5s infinite cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Bouncing animation */
-            transform-origin: center;
-        }
-
-        @keyframes bounce {
-            0% {
-                transform: translate(0, 0) rotate(0deg) scale(1);
-            }
-            25% {
-                transform: translate(100vw, 50vh) rotate(90deg) scale(1.2);
-            }
-            50% {
-                transform: translate(50vw, 100vh) rotate(180deg) scale(0.8);
-            }
-            75% {
-                transform: translate(0vw, 50vh) rotate(270deg) scale(1.5);
-            }
-            100% {
-                transform: translate(0, 0) rotate(360deg) scale(1);
-            }
-        }
-
+        /* Add any additional CSS here */
+        .hidden { display: none; }
     </style>
+    <script>
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll("section");
+            sections.forEach(section => section.classList.add("hidden"));
+
+            const targetSection = document.getElementById(sectionId);
+            targetSection.classList.remove("hidden");
+        }
+
+        window.onload = function() {
+            showSection('home');
+        };
+    </script>
 </head>
 <body>
+    <header>
+        <h1>Welcome to My DIY Store</h1>
+        <nav>
+            <a href="#" onclick="showSection('home')">Home</a>
+            <a href="#" onclick="showSection('products')">Products</a>
+            <a href="#" onclick="showSection('product-details')">Product Details</a>
+            <a href="#" onclick="showSection('contact')">Contact</a>
+        </nav>
+    </header>
 
-    <script>
-        const emojis = ['😂', '😍', '😎', '🤯', '😜', '🥳', '🤪', '👽', '🤖', '💩']; // Fun emoji list
-        const numberOfEmojis = 15; // Number of bouncing emojis
-        const body = document.body;
+    <!-- Home Section -->
+    <section id="home">
+        <div class="hero">
+            <h2>Your One-Stop DIY Shop</h2>
+            <p>Find all the tools and materials you need for your next project!</p>
+        </div>
+        <section class="featured-products">
+            <h2>Featured Products</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="images/hammer.jpg" alt="Hammer">
+                    <h3>Hammer</h3>
+                    <p>Durable and reliable hammer for all your DIY needs.</p>
+                    <span>$9.99</span>
+                </div>
+                <div class="product-card">
+                    <img src="images/screwdriver.jpg" alt="Screwdriver">
+                    <h3>Screwdriver Set</h3>
+                    <p>A complete set of screwdrivers for any project.</p>
+                    <span>$14.99</span>
+                </div>
+            </div>
+        </section>
+    </section>
 
-        function getRandomEmoji() {
-            return emojis[Math.floor(Math.random() * emojis.length)];
-        }
+    <!-- Products Section -->
+    <section id="products" class="hidden">
+        <h2>Browse Our Products</h2>
+        <div class="products-grid">
+            <div class="product-card">
+                <img src="images/hammer.jpg" alt="Hammer">
+                <h3>Hammer</h3>
+                <p>$9.99</p>
+            </div>
+            <div class="product-card">
+                <img src="images/screwdriver.jpg" alt="Screwdriver Set">
+                <h3>Screwdriver Set</h3>
+                <p>$14.99</p>
+            </div>
+            <!-- Add more products here -->
+        </div>
+    </section>
 
-        function getRandomPosition() {
-            const x = Math.random() * window.innerWidth;
-            const y = Math.random() * window.innerHeight;
-            return { x, y };
-        }
+    <!-- Product Details Section -->
+    <section id="product-details" class="hidden">
+        <h2>Product Details</h2>
+        <img src="images/hammer.jpg" alt="Hammer">
+        <h2>Hammer</h2>
+        <p>A high-quality hammer perfect for all DIY tasks. Durable and easy to handle.</p>
+        <span>$9.99</span>
+        <button>Add to Cart</button>
+    </section>
 
-        function createBouncingEmoji() {
-            const emojiDiv = document.createElement('div');
-            emojiDiv.classList.add('emoji');
-            emojiDiv.textContent = getRandomEmoji();
+    <!-- Contact Section -->
+    <section id="contact" class="hidden">
+        <h2>Contact Us</h2>
+        <form>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
 
-            const position = getRandomPosition();
-            emojiDiv.style.left = `${position.x}px`;
-            emojiDiv.style.top = `${position.y}px`;
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
 
-            emojiDiv.style.animationDuration = `${3 + Math.random() * 7}s`; // Random duration between 3 and 10 seconds
-            emojiDiv.style.fontSize = `${30 + Math.random() * 70}px`; // Random font size between 30px and 100px
-            body.appendChild(emojiDiv);
-        }
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" required></textarea>
 
-        function loadRandomEmojis() {
-            for (let i = 0; i < numberOfEmojis; i++) {
-                createBouncingEmoji();
-            }
-        }
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
 
-        window.onload = loadRandomEmojis;
-    </script>
+    <footer>
+        <p>&copy; 2024 DIY Store</p>
+    </footer>
 </body>
 </html>
