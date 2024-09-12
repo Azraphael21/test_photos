@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Pictures</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            margin: 20px 0;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .gallery img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Random Pictures</h1>
+    <div class="gallery" id="gallery"></div>
+
+    <script>
+        const gallery = document.getElementById('gallery');
+        const numberOfImages = 10;
+
+        function getRandomImage() {
+            const randomNumber = Math.floor(Math.random() * 1000); // Adjust the range for variety
+            return `https://picsum.photos/200/200?random=${randomNumber}`;
+        }
+
+        function loadRandomImages() {
+            for (let i = 0; i < numberOfImages; i++) {
+                const img = document.createElement('img');
+                img.src = getRandomImage();
+                gallery.appendChild(img);
+            }
+        }
+
+        window.onload = loadRandomImages;
+    </script>
+</body>
+</html>
